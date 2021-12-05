@@ -6,6 +6,7 @@ edition = "2018"
 license = "MIT/Apache-2.0"
 keywords = ["cryptography", "crypto", "signature", "kem"]
 categories = ["cryptography", "no-std"]
+description = ["A convenience crate which implements RustCrypto traits for pqcrypto primitives"]
 
 [dependencies]
 doc-comment = "0.3"

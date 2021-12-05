@@ -1,5 +1,8 @@
 # pqcrypto-compat
 
+[![Version](https://img.shields.io/crates/v/pqcrypto-compat.svg)](https://crates.io/crates/pqcrypto-compat)
+[![Docs](https://docs.rs/pqcrypto-compat/badge.svg)](https://docs.rs/pqcrypto-compat)
+
 Compatibility crate for using RustCrypto's [traits](https://github.com/RustCrypto/traits) with the cryptographic algorithm implementations from [pqcrypto](https://github.com/rustpq/pqcrypto/).
 
 License
