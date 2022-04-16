@@ -11,10 +11,29 @@ description = "A convenience crate which implements RustCrypto traits for pqcryp
 [dependencies]
 doc-comment = "0.3"
 kem = "0.1"
-pqcrypto = "0.14"
+pqcrypto = { version = "0.14", default-features = false }
 pqcrypto-traits = "0.3"
 signature = "1.4"
 rand_core = "0.6"
 
 [dev-dependencies]
 rand_core = { version = "0.6", features = [ "getrandom" ] }
+
+[features]
+default = [
+    "pqcrypto-kyber", "pqcrypto-frodo", "pqcrypto-ntru", "pqcrypto-ntruprime", "pqcrypto-saber",
+    "pqcrypto-classicmceliece", "pqcrypto-hqc", "pqcrypto-dilithium", "pqcrypto-falcon",
+    "pqcrypto-rainbow", "pqcrypto-sphincsplus"
+]
+pqcrypto-kyber = ["pqcrypto/pqcrypto-kyber"]
+pqcrypto-frodo = ["pqcrypto/pqcrypto-frodo"]
+pqcrypto-ntru = ["pqcrypto/pqcrypto-ntru"]
+pqcrypto-ntruprime = ["pqcrypto/pqcrypto-ntruprime"]
+pqcrypto-saber = ["pqcrypto/pqcrypto-saber"]
+pqcrypto-classicmceliece = ["pqcrypto/pqcrypto-classicmceliece"]
+pqcrypto-hqc = ["pqcrypto/pqcrypto-hqc"]
+pqcrypto-dilithium = ["pqcrypto/pqcrypto-dilithium"]
+pqcrypto-falcon = ["pqcrypto/pqcrypto-falcon"]
+pqcrypto-rainbow = ["pqcrypto/pqcrypto-rainbow"]
+pqcrypto-sphincsplus = ["pqcrypto/pqcrypto-sphincsplus"]
+serde_impls = ["pqcrypto/serialization"]

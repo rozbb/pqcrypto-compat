@@ -75,53 +75,106 @@ pk.verify(&message, &sig).unwrap();
     };
 }
 
+#[cfg(feature = "pqcrypto-dilithium")]
 impl_sign_verify!(dilithium2, "dilithium2");
+#[cfg(feature = "pqcrypto-dilithium")]
 impl_sign_verify!(dilithium3, "dilithium3");
+#[cfg(feature = "pqcrypto-dilithium")]
 impl_sign_verify!(dilithium5, "dilithium5");
+
+#[cfg(feature = "pqcrypto-falcon")]
 impl_sign_verify!(falcon512, "falcon-512");
+#[cfg(feature = "pqcrypto-falcon")]
 impl_sign_verify!(falcon1024, "falcon-1024");
+
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowicircumzenithal, "rainbowI-circumzenithal");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowiclassic, "rainbowI-classic");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowicompressed, "rainbowI-compressed");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowiiicircumzenithal, "rainbowIII-circumzenithal");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowiiiclassic, "rainbowIII-classic");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowiiicompressed, "rainbowIII-compressed");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowvcircumzenithal, "rainbowV-circumzenithal");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowvclassic, "rainbowV-classic");
+#[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowvcompressed, "rainbowV-compressed");
+
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka128frobust, "sphincs-haraka-128f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka128fsimple, "sphincs-haraka-128f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka128srobust, "sphincs-haraka-128s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka128ssimple, "sphincs-haraka-128s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka192frobust, "sphincs-haraka-192f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka192fsimple, "sphincs-haraka-192f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka192srobust, "sphincs-haraka-192s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka192ssimple, "sphincs-haraka-192s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka256frobust, "sphincs-haraka-256f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka256fsimple, "sphincs-haraka-256f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka256srobust, "sphincs-haraka-256s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka256ssimple, "sphincs-haraka-256s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256128frobust, "sphincs-sha256-128f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256128fsimple, "sphincs-sha256-128f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256128srobust, "sphincs-sha256-128s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256128ssimple, "sphincs-sha256-128s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256192frobust, "sphincs-sha256-192f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256192fsimple, "sphincs-sha256-192f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256192srobust, "sphincs-sha256-192s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256192ssimple, "sphincs-sha256-192s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256256frobust, "sphincs-sha256-256f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256256fsimple, "sphincs-sha256-256f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256256srobust, "sphincs-sha256-256s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincssha256256ssimple, "sphincs-sha256-256s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256128frobust, "sphincs-shake256-128f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256128fsimple, "sphincs-shake256-128f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256128srobust, "sphincs-shake256-128s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256128ssimple, "sphincs-shake256-128s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256192frobust, "sphincs-shake256-192f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256192fsimple, "sphincs-shake256-192f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256192srobust, "sphincs-shake256-192s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256192ssimple, "sphincs-shake256-192s-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256256frobust, "sphincs-shake256-256f-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256256fsimple, "sphincs-shake256-256f-simple");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256256srobust, "sphincs-shake256-256s-robust");
+#[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsshake256256ssimple, "sphincs-shake256-256s-simple");

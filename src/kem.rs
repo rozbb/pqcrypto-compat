@@ -10,10 +10,11 @@ use kem::{
     Encapsulator as EncapsulatorTrait, Error,
 };
 use pqcrypto_traits::kem::{Ciphertext as CiphertextTrait, SharedSecret as SharedSecretTrait};
+pub use pqcrypto_traits::kem::{PublicKey as PublicKeyTrait, SecretKey as SecretKeyTrait};
 use rand_core::{CryptoRng, RngCore};
 
 macro_rules! impl_kem {
-    ($mod_name:ident, $comment:literal, $ss_size:ty) => {
+    ($mod_name:ident, $comment:literal, $shared_secret_size:ty) => {
         doc_comment! {
             concat!(
                 $comment,
@@ -26,16 +27,15 @@ macro_rules! impl_kem {
     keypair, Encapsulator, PublicKey, SecretKey,
 };
 use kem::{
-    Decapsulator as DecapsulatorTrait, EncappedKey as EncappedKeyTrait,
-    Encapsulator as EncapsulatorTrait
+    Decapsulator as DecapsulatorTrait, Encapsulator as EncapsulatorTrait
 };
 
-// Set up the recip keypair
+// Generate the recipient's keypair
 let (pk_recip, sk_recip) = keypair();
-// Encapsulate
-let (ek, ss1) = Encapsulator.try_encap(&mut OsRng, &pk_recip).unwrap();
-// Decapsulate
-let ss2 = sk_recip.try_decap(&ek).unwrap();
+// Encapsulate, getting the encapsulated key and shared secret
+let (enc, ss1) = Encapsulator.try_encap(&mut OsRng, &pk_recip).unwrap();
+// Decapsulate and get the shared secret
+let ss2 = sk_recip.try_decap(&enc).unwrap();
 // Shared secrets should be identical
 assert_eq!(ss1, ss2);
 ```"
@@ -45,8 +45,7 @@ assert_eq!(ss1, ss2);
                 use pqcrypto::kem::$mod_name::{encapsulate, decapsulate};
                 pub use pqcrypto::kem::$mod_name::{keypair, PublicKey, SecretKey};
 
-
-                type NSecret = $ss_size;
+                type NSecret = $shared_secret_size;
 
                 /// An encapsulated key for this KEM. This is what gets sent over the wire.
                 pub struct EncappedKey(pqcrypto::kem::$mod_name::Ciphertext);
@@ -70,8 +69,10 @@ assert_eq!(ss1, ss2);
 
                 impl EncappedKeyTrait for EncappedKey {
                     type NSecret = NSecret;
-                    type SenderPublicKey = PublicKey;
                     type RecipientPublicKey = PublicKey;
+                    // None of these KEMs support authenticated encapsulation. Sender pubkey
+                    // doesn't make sense.
+                    type SenderPublicKey = ();
                 }
 
                 impl EncapsulatorTrait<EncappedKey> for Encapsulator {
@@ -110,41 +111,84 @@ assert_eq!(ss1, ss2);
     }
 }
 
+#[cfg(feature = "pqcrypto-saber")]
 impl_kem!(firesaber, "firesaber", U32);
+#[cfg(feature = "pqcrypto-saber")]
 impl_kem!(lightsaber, "lightsaber", U32);
+#[cfg(feature = "pqcrypto-saber")]
 impl_kem!(saber, "saber", U32);
+
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber512, "kyber512", U32);
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber51290s, "kyber51290s", U32);
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber768, "kyber768", U32);
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber76890s, "kyber76890s", U32);
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber1024, "kyber1024", U32);
+#[cfg(feature = "pqcrypto-kyber")]
 impl_kem!(kyber102490s, "kyber102490s", U32);
+
+#[cfg(feature = "pqcrypto-ntru")]
 impl_kem!(ntruhps2048509, "ntruhps2048509", U32);
+#[cfg(feature = "pqcrypto-ntru")]
 impl_kem!(ntruhps2048677, "ntruhps2048677", U32);
+#[cfg(feature = "pqcrypto-ntru")]
 impl_kem!(ntruhps4096821, "ntruhps4096821", U32);
+#[cfg(feature = "pqcrypto-ntru")]
 impl_kem!(ntruhrss701, "ntruhrss701", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(ntrulpr653, "ntrulpr653", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(ntrulpr761, "ntrulpr761", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(ntrulpr857, "ntrulpr857", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(sntrup653, "sntrup653", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(sntrup761, "sntrup761", U32);
+#[cfg(feature = "pqcrypto-ntruprime")]
 impl_kem!(sntrup857, "sntrup857", U32);
+
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem640aes, "frodokem640aes", U16);
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem640shake, "frodokem640shake", U16);
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem976aes, "frodokem976aes", U24);
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem976shake, "frodokem976shake", U24);
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem1344aes, "frodokem1344aes", U32);
+#[cfg(feature = "pqcrypto-frodo")]
 impl_kem!(frodokem1344shake, "frodokem1344shake", U32);
+
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece348864, "mceliece348864", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece348864f, "mceliece348864f", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece460896, "mceliece460896", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece460896f, "mceliece460896f", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece6688128, "mceliece6688128", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece6688128f, "mceliece6688128f", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece6960119, "mceliece6960119", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece6960119f, "mceliece6960119f", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece8192128, "mceliece8192128", U32);
+#[cfg(feature = "pqcrypto-classicmceliece")]
 impl_kem!(mceliece8192128f, "mceliece8192128f", U32);
+
+#[cfg(feature = "pqcrypto-hqc")]
 impl_kem!(hqcrmrs128, "hqcrmrs128", U64);
+#[cfg(feature = "pqcrypto-hqc")]
 impl_kem!(hqcrmrs192, "hqcrmrs192", U64);
+#[cfg(feature = "pqcrypto-hqc")]
 impl_kem!(hqcrmrs256, "hqcrmrs256", U64);
