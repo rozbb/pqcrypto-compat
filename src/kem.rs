@@ -3,7 +3,7 @@ use core::fmt;
 use doc_comment::doc_comment;
 use kem::{
     generic_array::{
-        typenum::{op, U1000, U16, U24, U32, U420, U64},
+        typenum::{U16, U24, U32, U64},
         GenericArray,
     },
     Decapsulator as DecapsulatorTrait, EncappedKey as EncappedKeyTrait,
@@ -19,14 +19,14 @@ macro_rules! impl_kem {
                 $comment,
                 "\n# Example\n",
                 "```\n",
-                "use rand_core::OsRng;",
+                "use rand_core::OsRng;\n",
                 "use pqcrypto_compat::kem::",
                 stringify!($mod_name),
-                "::{keypair, Encapsulator, PublicKey, SecretKey};",
-                "
+"::{
+    keypair, Encapsulator, PublicKey, SecretKey,
+};
 use kem::{
-    Decapsulator as DecapsulatorTrait,
-    EncappedKey as EncappedKeyTrait,
+    Decapsulator as DecapsulatorTrait, EncappedKey as EncappedKeyTrait,
     Encapsulator as EncapsulatorTrait
 };
 
@@ -75,9 +75,11 @@ assert_eq!(ss1, ss2);
                 }
 
                 impl EncapsulatorTrait<EncappedKey> for Encapsulator {
-                    /// Encapsulate to the given recipient. This cannot fail. Due to the underlying
-                    /// PQC implementation, this function DOES NOT use the given RNG. Rather, it
-                    /// samples its own randomness independently.
+                    /// Encapsulate to the given recipient, returning the encapsulated key and the
+                    /// shared secret. This cannot fail.
+                    ///
+                    /// **Note:** Due to the underlying PQC implementation, this function DOES NOT
+                    /// use the given RNG. Rather, it samples its own randomness independently.
                     fn try_encap<R: RngCore + CryptoRng>(
                         &self,
                         _: &mut R,
@@ -90,7 +92,8 @@ assert_eq!(ss1, ss2);
                 }
 
                 impl DecapsulatorTrait<EncappedKey> for SecretKey {
-                    /// Decapsulate the gien encapsulated key. This cannot fail.
+                    /// Decapsulate the given encapsulated key, returning the shared secret. This
+                    /// cannot fail.
                     fn try_decap(
                         &self,
                         encapped_key: &EncappedKey,
