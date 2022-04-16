@@ -10,6 +10,11 @@ description = "A convenience crate which implements RustCrypto traits for pqcryp
 
 [dependencies]
 doc-comment = "0.3"
+kem = "0.1"
 pqcrypto = "0.14"
 pqcrypto-traits = "0.3"
 signature = "1.4"
+rand_core = "0.6"
+
+[dev-dependencies]
+rand_core = { version = "0.6", features = [ "getrandom" ] }
