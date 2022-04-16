@@ -3,7 +3,7 @@ use core::fmt;
 use doc_comment::doc_comment;
 use kem::{
     generic_array::{
-        typenum::{U16, U24, U32, U64},
+        typenum::{Unsigned, U16, U24, U32, U64},
         GenericArray,
     },
     Decapsulator as DecapsulatorTrait, EncappedKey as EncappedKeyTrait,
@@ -42,12 +42,23 @@ assert_eq!(ss1, ss2);
             ),
             pub mod $mod_name {
                 use super::*;
-                use pqcrypto::kem::$mod_name::{encapsulate, decapsulate};
+                use pqcrypto::kem::$mod_name::{
+                    encapsulate, decapsulate, public_key_bytes, secret_key_bytes
+                };
                 pub use pqcrypto::kem::$mod_name::{keypair, PublicKey, SecretKey};
 
                 type NSecret = $shared_secret_size;
 
-                /// An encapsulated key for this KEM. This is what gets sent over the wire.
+                /// Number of bytes in a public key
+                pub const PUBLIC_KEY_SIZE: usize = public_key_bytes();
+                /// Number of bytes in a secret key
+                pub const SECRET_KEY_SIZE: usize = secret_key_bytes();
+                /// Number of bytes in an encapsulated key. This is identical to
+                /// `EncappedKey::NSecret::to_usize()`
+                pub const ENCAPPED_KEY_SIZE: usize = NSecret::USIZE;
+
+                /// An encapsulated key. This is what the recipient uses to derive the shared
+                /// secret.
                 pub struct EncappedKey(pqcrypto::kem::$mod_name::Ciphertext);
 
                 /// An object that creates new encapsulated keys. This is an empty struct.

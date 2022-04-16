@@ -27,10 +27,17 @@ pk.verify(&message, &sig).unwrap();
             pub mod $mod_name {
                 use super::*;
                 use pqcrypto::sign::$mod_name::{
-                    detached_sign, verify_detached_signature, DetachedSignature,
+                    detached_sign, public_key_bytes, secret_key_bytes, signature_bytes,
+                    verify_detached_signature, DetachedSignature,
                 };
-
                 pub use pqcrypto::sign::$mod_name::{keypair, PublicKey, SecretKey};
+
+                /// Number of bytes in a public key
+                pub const PUBLIC_KEY_SIZE: usize = public_key_bytes();
+                /// Number of bytes in a secret key
+                pub const SECRET_KEY_SIZE: usize = secret_key_bytes();
+                /// Number of bytes in a signature
+                pub const SIGNATURE_SIZE: usize = signature_bytes();
 
                 // We implement the bare minimum in order to make this compatible with
                 // RustCrypto's traits
