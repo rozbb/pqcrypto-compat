@@ -94,6 +94,9 @@ impl_sign_verify!(falcon512, "falcon-512");
 #[cfg(feature = "pqcrypto-falcon")]
 impl_sign_verify!(falcon1024, "falcon-1024");
 
+// TODO: Figure out what to do with Rainbow. Right now, this produces compiler warnings because
+// Rainbow is not secure with the current parameter sets.
+/*
 #[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowicircumzenithal, "rainbowI-circumzenithal");
 #[cfg(feature = "pqcrypto-rainbow")]
@@ -112,6 +115,7 @@ impl_sign_verify!(rainbowvcircumzenithal, "rainbowV-circumzenithal");
 impl_sign_verify!(rainbowvclassic, "rainbowV-classic");
 #[cfg(feature = "pqcrypto-rainbow")]
 impl_sign_verify!(rainbowvcompressed, "rainbowV-compressed");
+*/
 
 #[cfg(feature = "pqcrypto-sphincsplus")]
 impl_sign_verify!(sphincsharaka128frobust, "sphincs-haraka-128f-robust");
