@@ -50,8 +50,8 @@ assert_eq!(ss1.as_bytes(), ss2.as_bytes());
                 };
                 pub use pqcrypto::kem::$mod_name::{keypair, PublicKey, SecretKey};
 
-                type NSecret = $shared_secret_size;
-                type NEnc = $encapped_key_size;
+                type SharedSecretSize = $shared_secret_size;
+                type EncappedKeySize = $encapped_key_size;
 
                 // Define helpful public constants
 
