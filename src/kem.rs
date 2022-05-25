@@ -60,11 +60,11 @@ assert_eq!(ss1.as_bytes(), ss2.as_bytes());
                 /// Number of bytes in a secret key.
                 pub const SECRET_KEY_SIZE: usize = secret_key_bytes();
                 /// Number of bytes in a shared secret. This is identical to
-                /// `EncappedKey::NSecret::to_usize()`.
-                pub const SHARE_SECRET_SIZE: usize = NSecret::USIZE;
+                /// `EncappedKey::SharedSecretSize::to_usize()`.
+                pub const SHARE_SECRET_SIZE: usize = SharedSecretSize::USIZE;
                 /// Number of bytes in an encapsulated key. This is identical to
-                /// `EncappedKey::NEnc::to_usize()`.
-                pub const ENCAPPED_KEY_SIZE: usize = NEnc::USIZE;
+                /// `EncappedKey::EncappedKeySize::to_usize()`.
+                pub const ENCAPPED_KEY_SIZE: usize = EncappedKeySize::USIZE;
 
                 /// An encapsulated key. This is what the recipient uses to derive the shared
                 /// secret.
@@ -88,15 +88,15 @@ assert_eq!(ss1.as_bytes(), ss2.as_bytes());
                 }
 
                 impl EncappedKeyTrait for EncappedKey {
-                    type NEnc = NEnc;
-                    type NSecret = NSecret;
+                    type EncappedKeySize = EncappedKeySize;
+                    type SharedSecretSize = SharedSecretSize;
                     type RecipientPublicKey = PublicKey;
 
                     // None of these KEMs support authenticated encapsulation. Sender pubkey
                     // doesn't make sense.
                     type SenderPublicKey = ();
 
-                    fn from_bytes(bytes: &GenericArray<u8, Self::NEnc>) -> Result<Self, Error> {
+                    fn from_bytes(bytes: &GenericArray<u8, Self::EncappedKeySize>) -> Result<Self, Error> {
                         pqcrypto::kem::$mod_name::Ciphertext::from_bytes(bytes.as_slice())
                             .map(EncappedKey)
                             .map_err(|_| Error)
