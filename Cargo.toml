@@ -10,14 +10,11 @@ description = "A convenience crate which implements RustCrypto traits for pqcryp
 
 [dependencies]
 doc-comment = "0.3"
+kem = "0.2"
 pqcrypto = { version = "0.15", default-features = false }
 pqcrypto-traits = "0.3"
 signature = "1.4"
 rand_core = "0.6"
-
-[dependencies.kem]
-git = "https://github.com/rozbb/traits.git"
-branch = "kem-v2"
 
 [dev-dependencies]
 rand_core = { version = "0.6", features = [ "getrandom" ] }
